@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>HIR - Health Insurance Recommender</title>
+<link rel="stylesheet" type="text/css" href="view.css" media="all">
+<script type="text/javascript" src="view.js"></script>
+
+</head>
+<body id="main_body" >
+	
+	<img id="top" src="top.png" alt="">
+	<div id="form_container">
+	
+		<h1><a>HIR - Health Insurance Recommender</a></h1>
+		<form id="form_1116020" class="appnitro"  method="post" action="">
+					<div class="form_description">
+			<h2>HIR - Health Insurance Recommender</h2>
+			<p>Provide the information below so that the system can recommend the most suitable Obamacare plan for you.</p>
+		</div>						
+			<ul >
+			
+					<li id="li_1" >
+		<label class="description" for="element_1">Age: </label>
+		<div>
+			<input id="element_1" name="element_1" class="element text medium" type="text" maxlength="255" value=""/> 
+		</div> 
+		</li>		<li id="li_5" >
+		<label class="description" for="element_5">Gender </label>
+		<div>
+		<select class="element select medium" id="element_5" name="element_5"> 
+			<option value="" selected="selected"></option>
+<option value="1" >Male</option>
+<option value="2" >Female</option>
+<option value="3" >Other</option>
+
+		</select>
+		</div> 
+		</li>		<li id="li_2" >
+		<label class="description" for="element_2">Yearly Income </label>
+		<div>
+			<input id="element_2" name="element_2" class="element text medium" type="text" maxlength="255" value=""/> 
+		</div> 
+		</li>		<li id="li_3" >
+		<label class="description" for="element_3">Zipcode </label>
+		<div>
+			<input id="element_3" name="element_3" class="element text medium" type="text" maxlength="255" value=""/> 
+		</div> 
+		</li>		<li id="li_6" >
+		<label class="description" for="element_6">Marital Status </label>
+		<div>
+		<select class="element select medium" id="element_6" name="element_6"> 
+			<option value="" selected="selected"></option>
+<option value="1" >Married</option>
+<option value="2" >Single</option>
+
+		</select>
+		</div> 
+		</li>		<li id="li_7" >
+		<label class="description" for="element_7">Number of Children </label>
+		<div>
+		<select class="element select medium" id="element_7" name="element_7"> 
+			<option value="" selected="selected"></option>
+<option value="1" >1</option>
+<option value="2" >2</option>
+<option value="3" >3</option>
+<option value="4" >4</option>
+<option value="5" >5</option>
+<option value="6" >6+ (seriously, haven't you heard of birth control??)</option>
+
+		</select>
+		</div> 
+		</li>		<li id="li_8" >
+		<label class="description" for="element_8">Diseases </label>
+		<span>
+			<input id="element_8_1" name="element_8_1" class="element checkbox" type="checkbox" value="1" />
+<label class="choice" for="element_8_1">Cancer</label>
+<input id="element_8_2" name="element_8_2" class="element checkbox" type="checkbox" value="1" />
+<label class="choice" for="element_8_2">Diabetes</label>
+<input id="element_8_3" name="element_8_3" class="element checkbox" type="checkbox" value="1" />
+<label class="choice" for="element_8_3">High Blood Pressure</label>
+<input id="element_8_4" name="element_8_4" class="element checkbox" type="checkbox" value="1" />
+<label class="choice" for="element_8_4">High Colesterol</label>
+<input id="element_8_5" name="element_8_5" class="element checkbox" type="checkbox" value="1" />
+<label class="choice" for="element_8_5">Mental Health</label>
+
+		</span> 
+		</li>		<li id="li_4" >
+		<label class="description" for="element_4">Other Diseases </label>
+		<div>
+			<textarea id="element_4" name="element_4" class="element textarea small"></textarea> 
+		</div><p class="guidelines" id="guide_4"><small>List any other major diseases you want covered</small></p> 
+		</li>		<li id="li_9" >
+		<label class="description" for="element_9">How often do you visit the doctor for a consult: </label>
+		<div>
+		<select class="element select medium" id="element_9" name="element_9"> 
+			<option value="" selected="selected"></option>
+<option value="1" >Only on emergencies</option>
+<option value="2" >Occasionally</option>
+<option value="3" >Regularly</option>
+<option value="4" >Very often</option>
+
+		</select>
+		</div> 
+		</li>
+        
+        <li id="li_10" >
+        <label class="description" for="element_10">(Optional) Order what you consider to be most important: </label>>
+        
+        <script type="text/javascript">
+function moveUp(selectId) {
+	var selectList = document.getElementById(selectId);
+	var selectOptions = selectList.getElementsByTagName('option');
+	for (var i = 1; i < selectOptions.length; i++) {
+		var opt = selectOptions[i];
+		if (opt.selected) {
+			selectList.removeChild(opt);
+			selectList.insertBefore(opt, selectOptions[i - 1]);
+		}
+       }
+}
+ 
+function moveDown(selectId) {
+	var selectList = document.getElementById(selectId);
+	var selectOptions = selectList.getElementsByTagName('option');
+	for (var i = selectOptions.length - 2; i >= 0; i--) {
+		var opt = selectOptions[i];
+		if (opt.selected) {
+		   var nextOpt = selectOptions[i + 1];
+		   opt = selectList.removeChild(opt);
+		   nextOpt = selectList.replaceChild(opt, nextOpt);
+		   selectList.insertBefore(nextOpt, opt);
+		}
+       }
+}
+</script>
+        
+        <select id="selected" name="selected" size="3" multiple="multiple">
+	<option>Deductible</option>
+	<option>Out-of-pocket</option>
+	<option>Premium</option>
+    
+</select>
+<div class="div" >
+	<img src="arrow_up.png" alt="Move Up" style="float:right;width:25px;height:25px;" onclick="moveUp('selected')" /><br />
+	<img src="arrow_down.png" alt="Move Down" style="float:right;width:25px;height:25px;" onclick="moveDown('selected')" />
+</div>
+        
+        <p class="guidelines" id="guide_10"><small>TODO!</small></p> 
+        </li>
+
+					<li class="buttons">
+			    
+			    
+				<input id="saveForm" class="button_text" type="submit" name="submit" value="Submit" />
+		</li>
+			</ul>
+		</form>	
+		<div id="footer">
+			
+		</div>
+	</div>
+	<img id="bottom" src="bottom.png" alt="">
+	</body>
+</html>
