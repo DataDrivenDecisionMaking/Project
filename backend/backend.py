@@ -1,27 +1,22 @@
 import sqlite3
 
 conn = sqlite3.connect('/Users/manishsingh/SEM4/downloads/sqlite-autoconf-3120100/team1DB.db')
-
 cursor_insert = conn.cursor()
 
 print conn
-
 print "Opened database successfully"
 
 
+#GET THE CUSTOMER PREFERRED WEIGHTS FOR PREMIUM AND DEDUCTIBLE
 query_cust_pref_cost = "SELECT premium_weight, deductible_weight FROM preferences_cost"
-
 cursor_cust_pref_cost = conn.execute(query_cust_pref_cost)
 
 for row in cursor_cust_pref_cost:
 	v_pref_premium_weight = row[0]
 	v_pref_deductible_weight = row[1]
 
-
-
 query_cust_pref_service = "select * from preference_services"
 query_cust_pref_service = query_cust_pref_service  + "where customer_id = (select max(customer_id) from preference_services)"
-
 cursor_cust_pref_service = conn.execute(query_cust_pref_service)
 
 prepareString = ""
@@ -144,7 +139,6 @@ prepareString = "(" + prepareString + ")"
 
 query_personal = "SELECT customer_id, age, married, number_of_children from personal_details"
 query_personal += " WHERE customer_id = (SELECT max(customer_id) from personal_details"
-
 cursor_personal = conn.execute(query_personal)
 
 # Expecting one record only
@@ -153,8 +147,6 @@ for row in cursor_personal:
 	cust_age = row[1]
 	cust_marriage_status = row[2]
 	cust_num_of_children = row[3]
-
-
 
  # Main query
 query = "select pd.age, pd.married, pd.number_of_children,"
@@ -196,6 +188,8 @@ query = query + "and pd.customer_id =  ( select max(customer_id) from personal_d
 
 cursor_main = conn.execute(query)
 
+
+# START OF THE MAIN CURSOR
 for row in cursor_main:
 	v_age = row[0]
 	v_married = row[1]
@@ -226,8 +220,6 @@ for row in cursor_main:
 	v_COUPLE2_CHILDREN_AGE_40 = row[26]
 	v_COUPLE2_CHILDREN_AGE_50 = row[27]
 	v_COUPLE3_OR_MORE_CHILDREN_AGE_21 = row[28]
-
-
 	v_COUPLE3_OR_MORE_CHILDREN_AGE_30 = row[29]
 	v_COUPLE3_OR_MORE_CHILDREN_AGE_40 = row[30]
 	v_COUPLE3_OR_MORE_CHILDREN_AGE_50 = row[31]
@@ -235,19 +227,16 @@ for row in cursor_main:
 	v_IND1_CHILD_AGE_30 = row[33]
 	v_IND1_CHILD_AGE_40 = row[34]
 	v_IND1_CHILD_AGE_50 = row[35]
-
 	v_IND2_CHILD_AGE_21 = row[36]
 	v_IND2_CHILD_AGE_30 = row[37]
 	v_IND2_CHILD_AGE_40 = row[38]
 	v_IND2_CHILD_AGE_50 = row[39]
-
 	v_IND3_OR_MORE_CHILDREN_AGE_21 = row[40]
 	v_IND3_OR_MORE_CHILDREN_AGE_30 = row[41]
 	v_IND3_OR_MORE_CHILDREN_AGE_40 = row[42]
 	v_IND3_OR_MORE_CHILDREN_AGE_50 = row[43]
 	v_MED_DED_IND_STD = row[44]
 	v_MED_DED_FAM_STD = row[45]
-
 	v_Service_Allergy=row[46]*0.02
 	v_Service_Abortion=row[47]*0.02
 	v_Service_Acupuncture=row[48]*0.02
@@ -283,11 +272,9 @@ for row in cursor_main:
 
 	if cust_pref_dict['Service_Acupuncture'] > 0 :
 		v_Service_Acupuncture *= cust_pref_dict['Service_Acupuncture'] 
-	
 
 	if cust_pref_dict['Service_BabyCare'] > 0 :
 		v_Service_BabyCare *= cust_pref_dict['Service_BabyCare']
-
 
 	if cust_pref_dict['Service_Cancer'] > 0 :
 		v_Service_Cancer *= cust_pref_dict['Service_Cancer']
@@ -346,7 +333,6 @@ for row in cursor_main:
 	if cust_pref_dict['Service_Urgent_Care'] > 0 :
 		v_Service_Urgent_Care *= cust_pref_dict['Service_Urgent_Care'] 
 
-
 	if cust_pref_dict['Service_Weight_Loss'] > 0 :
 		v_Service_Weight_Loss *= cust_pref_dict['Service_Weight_Loss']
 
@@ -361,7 +347,6 @@ for row in cursor_main:
                             v_Service_Mammogram + v_Service_MentalHealth + v_Service_Nursing + v_Service_PostNatal 
                             + v_Service_PreNatal + v_Service_Referral + v_Service_Rehabilitation + v_Service_Surgery +
                              v_Service_Urgent_Care + v_Service_Weight_Loss + v_Service_X_Ray
-
 
 	# Pending things
 	# Write if conditions 
@@ -504,6 +489,9 @@ for row in cursor_main:
 
 
 
+#NOTE : BELOW CODE WORKS OUTSIDE THE MAIN CURSOR
+
+# Get the max and min values of premium and deductible for normalization
 query_weight_table_max = "SELECT max(v_premium), max(v_deductible) from weight_table"
 cursor_weight_table_max = conn.execute(query_weight_table_max)
 
@@ -511,7 +499,7 @@ for row in cursor_weight_table_max:
 	max_premium = row[0]
 	max_deductible = row[1]
 
-
+# Normalize premium and deductible in weight table
 query_weight_table_normalize = "UPDATE weight_table set v_premium = v_premium/"+max_premium
 query_weight_table_normalize += ", v_deductible = v_deductible/"+max_deductible+" where v_customer_id = "+cust_id
 
@@ -528,7 +516,7 @@ cursor_prem_ded_upd = conn.cursor()
 cursor_prem_ded_upd.execute(query_wt_tbl_prem_ded_upd)
 conn.commit()
 
-#Update Score
+#Update Final Score in weight table
 
 query_wt_final_score_upd = "Update weight_table set v_final_score = v_service_score/(v_deductible + v_premium)"
 query_wt_final_score_upd += " where v_customer_id ="+ cust_id;
