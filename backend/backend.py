@@ -7,7 +7,6 @@ print conn
 print "Opened database successfully"
 
 
-
 query_cust_pref_service = "select * from preference_services"
 query_cust_pref_service = query_cust_pref_service  + "where customer_id = (select max(customer_id) from preference_services)"
 
@@ -15,57 +14,115 @@ cursor_cust_pref_service = conn.execute(query_cust_pref_service)
 
 prepareString = ""
 
-// Pending : Check if you want to compare with NULL or Zero in the if condition
+cust_pref_dict = { 'service_allergy': 0,'service_abortion': 0,'Service_Acupuncture': 0,'Service_BabyCare': 0,'Service_Cancer': 0,
+'Service_Cardiac': 0,'Service_Chiropractic_Care': 0,'Service_Cosmetic_Surgery': 0,'Service_Dental': 0,
+'Service_Diabetes': 0,'Service_EyeCare': 0,'Service_Habilitation': 0,'Service_Immunization': 0,
+'Service_Infertility': 0,'Service_Mammogram': 0,'Service_MentalHealth': 0,'Service_Nursing': 0,
+'Service_PostNatal': 0,'Service_PreNatal': 0,'Service_Referral': 0,'Service_Rehabilitation': 0,'Service_Surgery': 0,
+'Service_Urgent_Care': 0,'Service_Weight_Loss': 0,'Service_X_Ray': 0}
 
+# Pending : Check if you want to compare with NULL or Zero in the if condition
+# start from 1 because 0th column is customer id 
 for row in cursor_cust_pref_service:
 	if row[1] != NULL
 		prepareString += "service_allergy > 0 " 
+		cust_pref_dict['service_allergy'] = row[1]
+
 	if row[2] != NULL
 		prepareString += "OR service_abortion > 0 "
+		cust_pref_dict['service_abortion'] = row[2]
+
 	if row[3] != NULL
 		prepareString += "OR Service_Acupuncture > 0 "
+		cust_pref_dict['Service_Acupuncture'] = row[3]
+
 	if row[4] != NULL
 		prepareString += "OR Service_BabyCare > 0 "
+		cust_pref_dict['Service_BabyCare'] = row[4]
+
 	if row[5] != NULL
 		prepareString += "OR Service_Cancer > 0 "
+		cust_pref_dict['Service_Cancer'] = row[5]
+
 	if row[6] != NULL
 		prepareString += "OR Service_Cardiac > 0 "
+		cust_pref_dict['Service_Cardiac'] = row[6]
+
 	if row[7] != NULL
 		prepareString += "OR Service_Chiropractic_Care > 0 "
+		cust_pref_dict['Service_Chiropractic_Care'] = row[7]
+
 	if row[8] != NULL
 		prepareString += "OR Service_Cosmetic_Surgery > 0 "
+		cust_pref_dict['Service_Cosmetic_Surgery'] = row[8]
+
 	if row[9] != NULL
 		prepareString += "OR Service_Dental > 0 "
+		cust_pref_dict['Service_Dental'] = row[9]
+
 	if row[10] != NULL
 		prepareString += "OR Service_Diabetes > 0 "
+		cust_pref_dict['Service_Diabetes'] = row[10]
+
 	if row[11] != NULL
 		prepareString += "OR Service_EyeCare > 0 "
+		cust_pref_dict['Service_EyeCare'] = row[11]
+
 	if row[12] != NULL
 		prepareString += "OR Service_Habilitation > 0 "
+		cust_pref_dict['Service_Habilitation'] = row[12]
+
 	if row[13] != NULL
 		prepareString += "OR Service_Immunization > 0 "
+		cust_pref_dict['Service_Immunization'] = row[13]
+
 	if row[14] != NULL
 		prepareString += "OR Service_Infertility > 0 "
+		cust_pref_dict['Service_Infertility'] = row[14]
+
 	if row[15] != NULL
 		prepareString += "OR Service_Mammogram > 0 "
+		cust_pref_dict['Service_Mammogram'] = row[15]
+
 	if row[16] != NULL
 		prepareString += "OR Service_MentalHealth > 0 "
+		cust_pref_dict['Service_MentalHealth'] = row[16]
+
 	if row[17] != NULL
 		prepareString += "OR Service_Nursing > 0 "
+		cust_pref_dict['Service_Nursing'] = row[17]
+
 	if row[18] != NULL
 		prepareString += "OR Service_PostNatal > 0 "
+		cust_pref_dict['Service_PostNatal'] = row[18]
+
 	if row[19] != NULL
 		prepareString += "OR Service_PreNatal > 0 "
+		cust_pref_dict['Service_PreNatal'] = row[19]
+
 	if row[20] != NULL
-		prepareString += "OR Service_Rehabilitation > 0 "
+		prepareString += "OR Service_Referral > 0 "
+		cust_pref_dict['Service_Referral'] = row[20]
+	
 	if row[21] != NULL
-		prepareString += "OR Service_Surgery > 0 "
+		prepareString += "OR Service_Rehabilitation > 0 "
+		cust_pref_dict['Service_Rehabilitation'] = row[21]
+
 	if row[22] != NULL
-		prepareString += "OR Service_Urgent_Care > 0 "
+		prepareString += "OR Service_Surgery > 0 "
+		cust_pref_dict['Service_Surgery'] = row[22]
+
 	if row[23] != NULL
-		prepareString += "OR Service_Weight_Loss > 0 "
+		prepareString += "OR Service_Urgent_Care > 0 "
+		cust_pref_dict['Service_Urgent_Care'] = row[23]
+
 	if row[24] != NULL
+		prepareString += "OR Service_Weight_Loss > 0 "
+		cust_pref_dict['Service_Weight_Loss'] = row[24]
+
+	if row[25] != NULL
 		prepareString += "OR Service_X_Ray > 0 "
+		cust_pref_dict['Service_X_Ray'] = row[25]
 
 
 prepareString = "(" + prepareString + ")"
@@ -178,31 +235,119 @@ for row in cursor_main:
 	v_MED_DED_IND_STD = row[44]
 	v_MED_DED_FAM_STD = row[45]
 
-	v_Service_Allergy=row[46]
-	v_Service_Abortion=row[47]
-	v_Service_Acupuncture=row[48]
-	v_Service_BabyCare=row[49]
-	v_Service_Cancer=row[50]
-	v_Service_Cardiac=row[51]
-	v_Service_Chiropractic_Care=row[52]
-	v_Service_Cosmetic_Surgery=row[53]
-	v_Service_Dental=row[54]
-	v_Service_Diabetes=row[55]
-	v_Service_EyeCare=row[56]
-	v_Service_Habilitation=row[57]
-	v_Service_Immunization=row[58]
-	v_Service_Infertility=row[59]
-	v_Service_Mammogram=row[60]
-	v_Service_MentalHealth=row[61]
-	v_Service_Nursing=row[62]
-	v_Service_PostNatal=row[63]
-	v_Service_PreNatal=row[64]
-	v_Service_Referral=row[65]
-	v_Service_Rehabilitation=row[66]
-	v_Service_Surgery=row[67]
-	v_Service_Urgent_Care=row[68]
-	v_Service_Weight_Loss=row[69]
-	v_Service_X_Ray=row[70]
+	v_Service_Allergy=row[46]*0.02
+	v_Service_Abortion=row[47]*0.02
+	v_Service_Acupuncture=row[48]*0.02
+	v_Service_BabyCare=row[49]*0.02
+	v_Service_Cancer=row[50]*0.02
+	v_Service_Cardiac=row[51]*0.02
+	v_Service_Chiropractic_Care=row[52]*0.02
+	v_Service_Cosmetic_Surgery=row[53]*0.02
+	v_Service_Dental=row[54]*0.02
+	v_Service_Diabetes=row[55]*0.02
+	v_Service_EyeCare=row[56]*0.02
+	v_Service_Habilitation=row[57]*0.02
+	v_Service_Immunization=row[58]*0.02
+	v_Service_Infertility=row[59]*0.02
+	v_Service_Mammogram=row[60]*0.02
+	v_Service_MentalHealth=row[61]*0.02
+	v_Service_Nursing=row[62]*0.02
+	v_Service_PostNatal=row[63]*0.02
+	v_Service_PreNatal=row[64]*0.02
+	v_Service_Referral=row[65]*0.02
+	v_Service_Rehabilitation=row[66]*0.02
+	v_Service_Surgery=row[67]*0.02
+	v_Service_Urgent_Care=row[68]*0.02
+	v_Service_Weight_Loss=row[69]*0.02
+	v_Service_X_Ray=row[70]*0.02
+
+
+	if cust_pref_dict['service_allergy'] > 0 :
+		v_Service_Allergy *= cust_pref_dict['service_allergy'] 
+
+	if cust_pref_dict['service_abortion'] > 0 :
+		v_Service_Abortion *= cust_pref_dict['service_abortion'] 
+
+	if cust_pref_dict['Service_Acupuncture'] > 0 :
+		v_Service_Acupuncture *= cust_pref_dict['Service_Acupuncture'] 
+	
+
+	if cust_pref_dict['Service_BabyCare'] > 0 :
+		v_Service_BabyCare *= cust_pref_dict['Service_BabyCare']
+
+
+	if cust_pref_dict['Service_Cancer'] > 0 :
+		v_Service_Cancer *= cust_pref_dict['Service_Cancer']
+
+	if cust_pref_dict['Service_Cardiac'] > 0 :
+		v_Service_Cardiac *= cust_pref_dict['Service_Cardiac'] 
+
+	if cust_pref_dict['Service_Chiropractic_Care'] > 0 :
+		v_Service_Chiropractic_Care *= cust_pref_dict['Service_Chiropractic_Care'] 
+
+	if cust_pref_dict['Service_Cosmetic_Surgery'] > 0 :
+		v_Service_Cosmetic_Surgery *= cust_pref_dict['Service_Cosmetic_Surgery']
+
+	if cust_pref_dict['Service_Dental'] > 0 :
+		v_Service_Dental *= cust_pref_dict['Service_Dental']
+
+	if cust_pref_dict['Service_Diabetes'] > 0 :
+		v_Service_Diabetes *= cust_pref_dict['Service_Diabetes'] 
+
+	if cust_pref_dict['Service_EyeCare'] > 0 :
+		v_Service_EyeCare *= cust_pref_dict['Service_EyeCare'] 
+
+	if cust_pref_dict['Service_Habilitation'] > 0 :
+		v_Service_Habilitation *= cust_pref_dict['Service_Habilitation'] 
+
+	if cust_pref_dict['Service_Immunization'] > 0 :
+		v_Service_Immunization *= cust_pref_dict['Service_Immunization'] 
+
+	if cust_pref_dict['Service_Infertility'] > 0 :
+		v_Service_Infertility *= cust_pref_dict['Service_Infertility'] 
+
+	if cust_pref_dict['Service_Mammogram'] > 0 :
+		v_Service_Mammogram *= cust_pref_dict['Service_Mammogram']
+
+	if cust_pref_dict['Service_MentalHealth'] > 0 :
+		v_Service_MentalHealth *= cust_pref_dict['Service_MentalHealth'] 
+
+	if cust_pref_dict['Service_Nursing'] > 0 :
+		v_Service_Nursing *= cust_pref_dict['Service_Nursing'] 
+
+	if cust_pref_dict['Service_PostNatal'] > 0 :
+		v_Service_PostNatal *= cust_pref_dict['Service_PostNatal'] 
+
+	if cust_pref_dict['Service_PreNatal'] > 0 :
+		v_Service_PreNatal *= cust_pref_dict['Service_PreNatal'] 
+
+	if cust_pref_dict['Service_Referral'] > 0 :
+		v_Service_Referral *= cust_pref_dict['Service_Referral'] 
+
+	if cust_pref_dict['Service_Rehabilitation'] > 0 :
+		v_Service_Rehabilitation *= cust_pref_dict['Service_Rehabilitation'] 
+
+	if cust_pref_dict['Service_Surgery'] > 0 :
+		v_Service_Surgery *= cust_pref_dict['Service_Surgery'] 
+
+	if cust_pref_dict['Service_Urgent_Care'] > 0 :
+		v_Service_Urgent_Care *= cust_pref_dict['Service_Urgent_Care'] 
+
+
+	if cust_pref_dict['Service_Weight_Loss'] > 0 :
+		v_Service_Weight_Loss *= cust_pref_dict['Service_Weight_Loss']
+
+	if cust_pref_dict['Service_X_Ray'] > 0 :
+		v_Service_X_Ray *= cust_pref_dict['Service_X_Ray'] 
+
+
+    v_service_sum_derived = v_Service_Allergy + v_Service_Abortion+ v_Service_Acupuncture + 
+                            v_Service_BabyCare + v_Service_Cancer + v_Service_Cardiac + v_Service_Chiropractic_Care
+                            + v_Service_Cosmetic_Surgery + v_Service_Dental + v_Service_Diabetes + v_Service_EyeCare
+                            + v_Service_Habilitation + v_Service_Immunization + v_Service_Infertility + 
+                            v_Service_Mammogram + v_Service_MentalHealth + v_Service_Nursing + v_Service_PostNatal 
+                            + v_Service_PreNatal + v_Service_Referral + v_Service_Rehabilitation + v_Service_Surgery +
+                             v_Service_Urgent_Care + v_Service_Weight_Loss + v_Service_X_Ray
 
 
 	# Pending things
@@ -330,6 +475,9 @@ for row in cursor_main:
 
 		if cust_age > 40 :
 			v_cust_premium = v_IND3_OR_MORE_CHILDREN_AGE_50
+
+
+
 
 print "Operation done successfully";
 
