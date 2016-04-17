@@ -2,9 +2,21 @@ import sqlite3
 
 conn = sqlite3.connect('/Users/manishsingh/SEM4/downloads/sqlite-autoconf-3120100/team1DB.db')
 
+cursor_insert = conn.cursor()
+
 print conn
 
 print "Opened database successfully"
+
+
+query_cust_pref_cost = "SELECT premium_weight, deductible_weight FROM preferences_cost"
+
+cursor_cust_pref_cost = conn.execute(query_cust_pref_cost)
+
+for row in cursor_cust_pref_cost:
+	v_pref_premium_weight = row[0]
+	v_pref_deductible_weight = row[1]
+
 
 
 query_cust_pref_service = "select * from preference_services"
@@ -130,16 +142,17 @@ prepareString = "(" + prepareString + ")"
 
 #  Get number_of_children, age, married status
 
-query_personal = "SELECT age, married, number_of_children from personal_details"
+query_personal = "SELECT customer_id, age, married, number_of_children from personal_details"
 query_personal += " WHERE customer_id = (SELECT max(customer_id) from personal_details"
 
 cursor_personal = conn.execute(query_personal)
 
 # Expecting one record only
 for row in cursor_personal:
-	cust_age = row[0]
-	cust_marriage_status = row[1]
-	cust_num_of_children = row[2]
+	cust_id = row[0]
+	cust_age = row[1]
+	cust_marriage_status = row[2]
+	cust_num_of_children = row[3]
 
 
 
@@ -355,6 +368,11 @@ for row in cursor_main:
 	# Write insert query to load a custom table
 
 	v_cust_premium = 0 
+
+	if cust_marriage_status = 'Y' or cust_num_of_children > 0 :
+		v_cust_deductible = v_MED_DED_FAM_STD
+	else
+		v_cust_deductible = v_MED_DED_IND_STD 
 	
 	if cust_marriage_status == 'N' and cust_num_of_children == 0 :
 		if cust_age <= 21 :
@@ -477,6 +495,47 @@ for row in cursor_main:
 			v_cust_premium = v_IND3_OR_MORE_CHILDREN_AGE_50
 
 
+    # Insert into weight_table now
+    insert_query = "INSERT INTO weight_table values("+cust_id+","+v_plan_id+","+v_plan_marketing_name+","+v_cust_premium
+    insert_query += ","+ v_cust_deductible + ",0,"+v_service_sum_derived
+
+    cursor_insert.execute(insert_query)
+    conn.commit()
+
+
+
+query_weight_table_max = "SELECT max(v_premium), max(v_deductible) from weight_table"
+cursor_weight_table_max = conn.execute(query_weight_table_max)
+
+for row in cursor_weight_table_max:
+	max_premium = row[0]
+	max_deductible = row[1]
+
+
+query_weight_table_normalize = "UPDATE weight_table set v_premium = v_premium/"+max_premium
+query_weight_table_normalize += ", v_deductible = v_deductible/"+max_deductible+" where v_customer_id = "+cust_id
+
+cursor_update_normalize = conn.cursor()
+cursor_update_normalize.execute(query_weight_table_normalize)
+conn.commit()
+
+
+# Update premium and deductible in weight table
+query_wt_tbl_prem_ded_upd = "UPDATE weight_table set v_premium = v_premium*"+v_pref_premium_weight
+query_wt_tbl_prem_ded_upd += ", v_deductible = v_deductible*"+v_pref_deductible_weight+" where v_customer_id = "+cust_id
+
+cursor_prem_ded_upd = conn.cursor()
+cursor_prem_ded_upd.execute(query_wt_tbl_prem_ded_upd)
+conn.commit()
+
+#Update Score
+
+query_wt_final_score_upd = "Update weight_table set v_final_score = v_service_score/(v_deductible + v_premium)"
+query_wt_final_score_upd += " where v_customer_id ="+ cust_id;
+
+cursor_final_score_upd = conn.cursor()
+cursor_final_score_upd.execute(query_wt_final_score_upd)
+conn.commit()
 
 
 print "Operation done successfully";
