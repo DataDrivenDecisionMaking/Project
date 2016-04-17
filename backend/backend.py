@@ -207,8 +207,129 @@ for row in cursor_main:
 
 	# Pending things
 	# Write if conditions 
-	# Write insert query to load a custom table 
+	# Write insert query to load a custom table
+
+	v_cust_premium = 0 
 	
+	if cust_marriage_status == 'N' and cust_num_of_children == 0 :
+		if cust_age <= 21 :
+			v_cust_premium = v_PREM_ADULT_IND_AGE_21
+
+		if cust_age > 21 and cust_age <= 27 :
+			v_cust_premium = v_PREM_ADULT_IND_AGE_27
+
+		if cust_age > 27 and cust_age <= 30 :
+			v_cust_premium = v_PREM_ADULT_IND_AGE_30
+
+		if cust_age > 30 and cust_age <= 40 :
+			v_cust_premium = v_PREM_ADULT_IND_AGE_40
+
+		if cust_age > 40 and cust_age <= 50 :
+			v_cust_premium = v_PREM_ADULT_IND_AGE_50
+		
+		if cust_age > 50 :
+			v_cust_premium = v_PREM_ADULT_IND_AGE_60
+		
+	if cust_marriage_status == 'Y' and cust_num_of_children == 0 :
+		if cust_age <= 21 :
+			v_cust_premium = v_PREM_COUPLE_21
+
+		if cust_age > 21 and cust_age <= 30 :
+			v_cust_premium = v_PREM_COUPLE_30
+
+		if cust_age > 30 and cust_age <= 40 :
+			v_cust_premium = v_PREM_COUPLE_40 
+
+		if cust_age > 40 and cust_age <= 50 :
+			v_cust_premium = v_PREM_COUPLE_50 
+
+		if cust_age > 50 : 
+			v_cust_premium = v_PREM_COUPLE_60 
+	
+
+	if cust_marriage_status == 'Y' and cust_num_of_children == 1 :
+		if cust_age <= 21 :
+			v_cust_premium = v_COUPLE1_CHILD_AGE_21
+
+		if cust_age > 21 and cust_age <= 30 :
+			v_cust_premium = v_COUPLE1_CHILD_AGE_30
+
+		if cust_age > 30 and cust_age <= 40 :
+			v_cust_premium = v_COUPLE1_CHILD_AGE_40
+
+		if cust_age > 40 :
+			v_cust_premium = v_COUPLE1_CHILD_AGE_50 
+
+		
+	if cust_marriage_status == 'Y' and cust_num_of_children == 2 :
+		if cust_age <= 21 :
+			v_cust_premium = v_COUPLE2_CHILDREN_AGE_21
+
+		if cust_age > 21 and cust_age <= 30 :
+			v_cust_premium = v_COUPLE2_CHILDREN_AGE_30
+
+		if cust_age > 30 and cust_age <= 40 :
+			v_cust_premium = v_COUPLE2_CHILDREN_AGE_40
+
+		if cust_age > 40 :
+			v_cust_premium = v_COUPLE2_CHILDREN_AGE_50
+
+
+
+	if cust_marriage_status == 'Y' and cust_num_of_children >= 3 :
+		if cust_age <= 21 :
+			v_cust_premium = v_COUPLE3_OR_MORE_CHILDREN_AGE_21
+
+		if cust_age > 21 and cust_age <= 30 :
+			v_cust_premium = v_COUPLE3_OR_MORE_CHILDREN_AGE_30
+
+		if cust_age > 30 and cust_age <= 40 :
+			v_cust_premium = v_COUPLE3_OR_MORE_CHILDREN_AGE_40
+
+		if cust_age > 40 :
+			v_cust_premium = v_COUPLE3_OR_MORE_CHILDREN_AGE_50
+
+
+	if cust_marriage_status == 'N' and cust_num_of_children == 1 :
+		if cust_age <= 21 :
+			v_cust_premium = v_IND1_CHILD_AGE_21 
+
+		if cust_age > 21 and cust_age <= 30 :
+			v_cust_premium = v_IND1_CHILD_AGE_30
+
+		if cust_age > 30 and cust_age <= 40 :
+			v_cust_premium = v_IND1_CHILD_AGE_40
+
+		if cust_age > 40 :
+			v_cust_premium = v_IND1_CHILD_AGE_50
+
+
+	if cust_marriage_status == 'N' and cust_num_of_children == 2 :
+		if cust_age <= 21 :
+			v_cust_premium = v_IND2_CHILD_AGE_21 
+
+		if cust_age > 21 and cust_age <= 30 :
+			v_cust_premium = v_IND2_CHILD_AGE_30
+
+		if cust_age > 30 and cust_age <= 40 :
+			v_cust_premium = v_IND2_CHILD_AGE_40
+
+		if cust_age > 40 :
+			v_cust_premium = v_IND2_CHILD_AGE_50
+
+
+	if cust_marriage_status == 'N' and cust_num_of_children >= 3 :
+		if cust_age <= 21 :
+			v_cust_premium = v_IND3_OR_MORE_CHILDREN_AGE_21 
+
+		if cust_age > 21 and cust_age <= 30 :
+			v_cust_premium = v_IND3_OR_MORE_CHILDREN_AGE_30
+
+		if cust_age > 30 and cust_age <= 40 :
+			v_cust_premium = v_IND3_OR_MORE_CHILDREN_AGE_40
+
+		if cust_age > 40 :
+			v_cust_premium = v_IND3_OR_MORE_CHILDREN_AGE_50
 
 print "Operation done successfully";
 
