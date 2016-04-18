@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>HIR - Health Insurance Recommender</title>
+<link rel="stylesheet" type="text/css" href="view.css" media="all">
+<script type="text/javascript" src="view.js"></script>
+
+</head>
+<body id="main_body">
+	<img id="top" src="top.png" alt="">
+	<div id="form_container">
+	
+		<h1><a>HIR - Health Insurance Recommender</a></h1>
+		<form id="form_1116020" class="appnitro"  method="post" action="/signup">
+					<div class="form_description">
+			<h2>HIR - Health Insurance Recommender</h2>
+			<p>Provide the information below so that the system can recommend the most suitable Obamacare plan for you.</p>
+		</div>						
+			<ul >
+			
+					<li id="li_1" >
+<label class="description" for="element_0">Name </label>
+		<div>
+			<input id="element_0" name="fullname" class="element text medium" type="text" maxlength="255" value=""/> 
+		</div> 
+
+		<label class="description" for="element_1">Age </label>
+		<div>
+			<input id="element_1" name="age" class="element text medium" type="text" maxlength="255" value=""/> 
+		</div> 
+		</li>		<li id="li_5" >
+		<label class="description" for="element_5">Gender </label>
+		<div>
+		<select class="element select medium" id="element_5" name="gender" style="display:none;"> 
+			<option value="" selected="selected"></option>
+<option value="1" >Male</option>
+<option value="2" >Female</option>
+<option value="3" >Other</option>
+
+		</select>
+		</div> 
+		</li>		<li id="li_2" >
+		<label class="description" for="element_2">Yearly Income </label>
+		<div>
+			<input id="element_2" name="yearly_income" class="element text medium" type="text" maxlength="255" value=""/> 
+		</div> 
+		</li>		<li id="li_3" >
+		<label class="description" for="element_3">Zipcode </label>
+		<div>
+			<input id="element_3" name="zipcode" class="element text medium" type="text" maxlength="255" value=""/> 
+		</div> 
+		</li>		<li id="li_6" >
+		<label class="description" for="element_6">Marital Status </label>
+		<div>
+		<select class="element select medium" id="element_6" name="element_6"> 
+			<option value="" selected="selected"></option>
+<option value="1" >Married</option>
+<option value="2" >Single</option>
+
+		</select>
+		</div> 
+		</li>		<li id="li_7" >
+		<label class="description" for="element_7">Number of Children </label>
+		<div>
+		<select class="element select medium" id="element_7" name="element_7"> 
+			<option value="" selected="selected"></option>
+<option value="1" >1</option>
+<option value="2" >2</option>
+<option value="3" >3</option>
+<option value="4" >4</option>
+<option value="5" >5</option>
+<option value="6" >6+ (seriously, haven't you heard of birth control??)</option>
+
+		</select>
+		</div> 
+		</li>		<li id="li_8" >
+	    
+        <li id="li_10" >
+        <label class="description" for="element_10">(Optional) Order what you consider to be most important: </label>>
+        
+        <script type="text/javascript">
+function moveUp(selectId) {
+	var selectList = document.getElementById(selectId);
+	var selectOptions = selectList.getElementsByTagName('option');
+	for (var i = 1; i < selectOptions.length; i++) {
+		var opt = selectOptions[i];
+		if (opt.selected) {
+			selectList.removeChild(opt);
+			selectList.insertBefore(opt, selectOptions[i - 1]);
+		}
+       }
+}
+ 
+function moveDown(selectId) {
+	var selectList = document.getElementById(selectId);
+	var selectOptions = selectList.getElementsByTagName('option');
+	for (var i = selectOptions.length - 2; i >= 0; i--) {
+		var opt = selectOptions[i];
+		if (opt.selected) {
+		   var nextOpt = selectOptions[i + 1];
+		   opt = selectList.removeChild(opt);
+		   nextOpt = selectList.replaceChild(opt, nextOpt);
+		   selectList.insertBefore(nextOpt, opt);
+		}
+       }
+}
+</script>
+        
+        <select id="selected" name="selected" size="3" multiple="multiple">
+	<option>Deductible</option>
+	<option>Copay</option>
+	<option>Out-of-Pocket</option>
+    
+</select>
+<div class="div" >
+	<img src="arrow_up.png" alt="Move Up" style="float:right;width:25px;height:25px;" onclick="moveUp('selected')" /><br />
+	<img src="arrow_down.png" alt="Move Down" style="float:right;width:25px;height:25px;" onclick="moveDown('selected')" />
+</div>
+        
+        <p class="guidelines" id="guide_10"><small>Click on the arrow buttons to order what you think it's most important. </small></p> 
+        </li>
+		
+				<label class="description" for="element_7">Please select a range (in USD per year)</label>
+		<div>
+		<select class="element select medium" id="element_7" name="element_7"> 
+			<option value="" selected="selected"></option>
+<option value="1" >less than 500</option>
+<option value="2" >500 to 1000</option>
+<option value="3" >1000 to 2500</option>
+<option value="4" >2500 to 5000</option>
+<option value="5" >more than 5000</option>
+		</select>
+		</div> 
+<input type="submit" value="Signup"></input>
+
+          <p><a href="healthinfo.htm">Next</a></p>
+
+			</ul>
+		</form>	
+		<div id="footer">
+			
+		</div>
+	</div>
+	<img id="bottom" src="bottom.png" alt="">
+
+	</body>
+</html>
