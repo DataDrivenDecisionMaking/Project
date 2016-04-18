@@ -192,6 +192,7 @@ query = query + " and pd.customer_id =  ( select max(customer_id) from personal_
 cursor_main = conn.execute(query)
 
 
+
 # START OF THE MAIN CURSOR
 for row in cursor_main:
 	v_age = row[0]
@@ -240,116 +241,119 @@ for row in cursor_main:
 	v_IND3_OR_MORE_CHILDREN_AGE_50 = row[43]
 	v_MED_DED_IND_STD = row[44]
 	v_MED_DED_FAM_STD = row[45]
-	v_Service_Allergy=row[46]*0.02
-	v_Service_Abortion=row[47]*0.02
-	v_Service_Acupuncture=row[48]*0.02
-	v_Service_BabyCare=row[49]*0.02
-	v_Service_Cancer=row[50]*0.02
-	v_Service_Cardiac=row[51]*0.02
-	v_Service_Chiropractic_Care=row[52]*0.02
-	v_Service_Cosmetic_Surgery=row[53]*0.02
-	v_Service_Dental=row[54]*0.02
-	v_Service_Diabetes=row[55]*0.02
-	v_Service_EyeCare=row[56]*0.02
-	v_Service_Habilitation=row[57]*0.02
-	v_Service_Immunization=row[58]*0.02
-	v_Service_Infertility=row[59]*0.02
-	v_Service_Mammogram=row[60]*0.02
-	v_Service_MentalHealth=row[61]*0.02
-	v_Service_Nursing=row[62]*0.02
-	v_Service_PostNatal=row[63]*0.02
-	v_Service_PreNatal=row[64]*0.02
-	v_Service_Referral=row[65]*0.02
-	v_Service_Rehabilitation=row[66]*0.02
-	v_Service_Surgery=row[67]*0.02
-	v_Service_Urgent_Care=row[68]*0.02
-	v_Service_Weight_Loss=row[69]*0.02
-	v_Service_X_Ray=row[70]*0.02
-
-
+	v_Service_Allergy=float(row[46])*0.02
+	v_Service_Abortion=float(row[47])*0.02
+	v_Service_Acupuncture=float(row[48])*0.02
+	v_Service_BabyCare=float(row[49])*0.02
+	v_Service_Cancer=float(row[50])*0.02
+	v_Service_Cardiac=float(row[51])*0.02
+	v_Service_Chiropractic_Care=float(row[52])*0.02
+	v_Service_Cosmetic_Surgery=float(row[53])*0.02
+	v_Service_Dental=float(row[54])*0.02
+	v_Service_Diabetes=float(row[55])*0.02
+	v_Service_EyeCare=float(row[56])*0.02
+	v_Service_Habilitation=float(row[57])*0.02
+	v_Service_Immunization=float(row[58])*0.02
+	v_Service_Infertility=float(row[59])*0.02
+	v_Service_Mammogram=float(row[60])*0.02
+	v_Service_MentalHealth=float(row[61])*0.02
+	v_Service_Nursing=float(row[62])*0.02
+	v_Service_PostNatal=float(row[63])*0.02
+	v_Service_PreNatal=float(row[64])*0.02
+	v_Service_Referral=float(row[65])*0.02
+	v_Service_Rehabilitation=float(row[66])*0.02
+	v_Service_Surgery=float(row[67])*0.02
+	v_Service_Urgent_Care=float(row[68])*0.02
+	v_Service_Weight_Loss=float(row[69])*0.02
+	v_Service_X_Ray=float(row[70])*0.02
+	
 	if cust_pref_dict['service_allergy'] > 0 :
-		v_Service_Allergy *= cust_pref_dict['service_allergy'] 
+		v_Service_Allergy *= float(cust_pref_dict['service_allergy']) 
 
 	if cust_pref_dict['service_abortion'] > 0 :
-		v_Service_Abortion *= cust_pref_dict['service_abortion'] 
+		v_Service_Abortion *= float(cust_pref_dict['service_abortion']) 
 
 	if cust_pref_dict['Service_Acupuncture'] > 0 :
-		v_Service_Acupuncture *= cust_pref_dict['Service_Acupuncture'] 
+		v_Service_Acupuncture *= float(cust_pref_dict['Service_Acupuncture']) 
 
 	if cust_pref_dict['Service_BabyCare'] > 0 :
-		v_Service_BabyCare *= cust_pref_dict['Service_BabyCare']
+		v_Service_BabyCare *= float(cust_pref_dict['Service_BabyCare'])
 
 	if cust_pref_dict['Service_Cancer'] > 0 :
-		v_Service_Cancer *= cust_pref_dict['Service_Cancer']
+		v_Service_Cancer *= float(cust_pref_dict['Service_Cancer'])
 
 	if cust_pref_dict['Service_Cardiac'] > 0 :
-		v_Service_Cardiac *= cust_pref_dict['Service_Cardiac'] 
+		v_Service_Cardiac *= float(cust_pref_dict['Service_Cardiac']) 
 
 	if cust_pref_dict['Service_Chiropractic_Care'] > 0 :
-		v_Service_Chiropractic_Care *= cust_pref_dict['Service_Chiropractic_Care'] 
+		v_Service_Chiropractic_Care *= float(cust_pref_dict['Service_Chiropractic_Care']) 
 
 	if cust_pref_dict['Service_Cosmetic_Surgery'] > 0 :
-		v_Service_Cosmetic_Surgery *= cust_pref_dict['Service_Cosmetic_Surgery']
+		v_Service_Cosmetic_Surgery *= float(cust_pref_dict['Service_Cosmetic_Surgery'])
 
 	if cust_pref_dict['Service_Dental'] > 0 :
-		v_Service_Dental *= cust_pref_dict['Service_Dental']
+		v_Service_Dental *= float(cust_pref_dict['Service_Dental'])
 
 	if cust_pref_dict['Service_Diabetes'] > 0 :
-		v_Service_Diabetes *= cust_pref_dict['Service_Diabetes'] 
+		v_Service_Diabetes *= float(cust_pref_dict['Service_Diabetes']) 
 
 	if cust_pref_dict['Service_EyeCare'] > 0 :
-		v_Service_EyeCare *= cust_pref_dict['Service_EyeCare'] 
+		v_Service_EyeCare *= float(cust_pref_dict['Service_EyeCare']) 
 
 	if cust_pref_dict['Service_Habilitation'] > 0 :
-		v_Service_Habilitation *= cust_pref_dict['Service_Habilitation'] 
+		v_Service_Habilitation *= float(cust_pref_dict['Service_Habilitation']) 
 
 	if cust_pref_dict['Service_Immunization'] > 0 :
-		v_Service_Immunization *= cust_pref_dict['Service_Immunization'] 
+		v_Service_Immunization *= float(cust_pref_dict['Service_Immunization']) 
 
 	if cust_pref_dict['Service_Infertility'] > 0 :
-		v_Service_Infertility *= cust_pref_dict['Service_Infertility'] 
+		v_Service_Infertility *= float(cust_pref_dict['Service_Infertility']) 
 
 	if cust_pref_dict['Service_Mammogram'] > 0 :
-		v_Service_Mammogram *= cust_pref_dict['Service_Mammogram']
+		v_Service_Mammogram *= float(cust_pref_dict['Service_Mammogram'])
 
 	if cust_pref_dict['Service_MentalHealth'] > 0 :
-		v_Service_MentalHealth *= cust_pref_dict['Service_MentalHealth'] 
+		v_Service_MentalHealth *= float(cust_pref_dict['Service_MentalHealth']) 
 
 	if cust_pref_dict['Service_Nursing'] > 0 :
-		v_Service_Nursing *= cust_pref_dict['Service_Nursing'] 
+		v_Service_Nursing *= float(cust_pref_dict['Service_Nursing']) 
 
 	if cust_pref_dict['Service_PostNatal'] > 0 :
-		v_Service_PostNatal *= cust_pref_dict['Service_PostNatal'] 
+		v_Service_PostNatal *= float(cust_pref_dict['Service_PostNatal']) 
 
 	if cust_pref_dict['Service_PreNatal'] > 0 :
-		v_Service_PreNatal *= cust_pref_dict['Service_PreNatal'] 
+		v_Service_PreNatal *= float(cust_pref_dict['Service_PreNatal']) 
 
 	if cust_pref_dict['Service_Referral'] > 0 :
-		v_Service_Referral *= cust_pref_dict['Service_Referral'] 
+		v_Service_Referral *= float(cust_pref_dict['Service_Referral']) 
 
 	if cust_pref_dict['Service_Rehabilitation'] > 0 :
-		v_Service_Rehabilitation *= cust_pref_dict['Service_Rehabilitation'] 
+		v_Service_Rehabilitation *= float(cust_pref_dict['Service_Rehabilitation']) 
 
 	if cust_pref_dict['Service_Surgery'] > 0 :
-		v_Service_Surgery *= cust_pref_dict['Service_Surgery'] 
+		v_Service_Surgery *= float(cust_pref_dict['Service_Surgery']) 
 
 	if cust_pref_dict['Service_Urgent_Care'] > 0 :
-		v_Service_Urgent_Care *= cust_pref_dict['Service_Urgent_Care'] 
+		v_Service_Urgent_Care *= float(cust_pref_dict['Service_Urgent_Care']) 
 
 	if cust_pref_dict['Service_Weight_Loss'] > 0 :
-		v_Service_Weight_Loss *= cust_pref_dict['Service_Weight_Loss']
+		v_Service_Weight_Loss *= float(cust_pref_dict['Service_Weight_Loss'])
 
 	if cust_pref_dict['Service_X_Ray'] > 0 :
-		v_Service_X_Ray *= cust_pref_dict['Service_X_Ray'] 
+		v_Service_X_Ray *= float(cust_pref_dict['Service_X_Ray'])
+
+	v_service_sum_derived = v_Service_Allergy + v_Service_Abortion+ v_Service_Acupuncture + v_Service_BabyCare + v_Service_Cancer + v_Service_Cardiac + v_Service_Chiropractic_Care+ v_Service_Cosmetic_Surgery + v_Service_Dental + v_Service_Diabetes + v_Service_EyeCare+ v_Service_Habilitation + v_Service_Immunization + v_Service_Infertility + v_Service_Mammogram + v_Service_MentalHealth + v_Service_Nursing + v_Service_PostNatal + v_Service_PreNatal + v_Service_Referral + v_Service_Rehabilitation + v_Service_Surgery +v_Service_Urgent_Care + v_Service_Weight_Loss + v_Service_X_Ray
 
 
-    v_service_sum_derived = v_Service_Allergy + v_Service_Abortion+ v_Service_Acupuncture + 
-                            v_Service_BabyCare + v_Service_Cancer + v_Service_Cardiac + v_Service_Chiropractic_Care
-                            + v_Service_Cosmetic_Surgery + v_Service_Dental + v_Service_Diabetes + v_Service_EyeCare
-                            + v_Service_Habilitation + v_Service_Immunization + v_Service_Infertility + 
-                            v_Service_Mammogram + v_Service_MentalHealth + v_Service_Nursing + v_Service_PostNatal 
-                            + v_Service_PreNatal + v_Service_Referral + v_Service_Rehabilitation + v_Service_Surgery +
-                             v_Service_Urgent_Care + v_Service_Weight_Loss + v_Service_X_Ray
+
+
+    # v_service_sum_derived = v_Service_Allergy + v_Service_Abortion+ v_Service_Acupuncture +\ 
+    #                         v_Service_BabyCare + v_Service_Cancer + v_Service_Cardiac + v_Service_Chiropractic_Care
+    #                         + v_Service_Cosmetic_Surgery + v_Service_Dental + v_Service_Diabetes + v_Service_EyeCare
+    #                         + v_Service_Habilitation + v_Service_Immunization + v_Service_Infertility + 
+    #                         v_Service_Mammogram + v_Service_MentalHealth + v_Service_Nursing + v_Service_PostNatal 
+    #                         + v_Service_PreNatal + v_Service_Referral + v_Service_Rehabilitation + v_Service_Surgery +
+    #                          v_Service_Urgent_Care + v_Service_Weight_Loss + v_Service_X_Ray
 
 	# Pending things
 	# Write if conditions 
@@ -357,9 +361,9 @@ for row in cursor_main:
 
 	v_cust_premium = 0 
 
-	if cust_marriage_status = 'Y' or cust_num_of_children > 0 :
+	if cust_marriage_status == 'Y' or cust_num_of_children > 0 :
 		v_cust_deductible = v_MED_DED_FAM_STD
-	else
+	else:
 		v_cust_deductible = v_MED_DED_IND_STD 
 	
 	if cust_marriage_status == 'N' and cust_num_of_children == 0 :
@@ -481,14 +485,11 @@ for row in cursor_main:
 
 		if cust_age > 40 :
 			v_cust_premium = v_IND3_OR_MORE_CHILDREN_AGE_50
-
-
-    # Insert into weight_table now
-    insert_query = "INSERT INTO weight_table values("+cust_id+","+v_plan_id+","+v_plan_marketing_name+","+v_cust_premium
-    insert_query += ","+ v_cust_deductible + ",0,"+v_service_sum_derived
-
-    cursor_insert.execute(insert_query)
-    conn.commit()
+	insert_query = "INSERT INTO weight_table values("+cust_id+",'"+str(v_plan_id)+"','"+v_plan_marketing_name+"','"+str(v_cust_premium)
+	insert_query += "','"+ str(v_cust_deductible) + "',"+str(v_service_sum_derived)+",0,0)"
+	print insert_query
+	cursor_insert.execute(insert_query)
+	conn.commit()
 
 
 
