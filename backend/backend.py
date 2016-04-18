@@ -15,8 +15,12 @@ for row in cursor_cust_pref_cost:
 	v_pref_premium_weight = row[0]
 	v_pref_deductible_weight = row[1]
 
-query_cust_pref_service = "select * from preferences_services"
-query_cust_pref_service = query_cust_pref_service  + " where customer_id = (select max(customer_id) from preferences_services)"
+query_cust_pref_service = "select service_allergy,service_abortion,Service_Acupuncture,Service_BabyCare,Service_Cancer"
+query_cust_pref_service +=",Service_Cardiac,Service_Chiropractic_Care,Service_Cosmetic_Surgery,Service_Dental,"
+query_cust_pref_service +="Service_Diabetes,Service_EyeCare,Service_Habilitation,Service_Immunization,Service_Infertility,"
+query_cust_pref_service +="Service_Mammogram,Service_MentalHealth,Service_Nursing,Service_PostNatal,Service_PreNatal,"
+query_cust_pref_service +="Service_Referral,Service_Rehabilitation,Service_Surgery,Service_Urgent_Care,Service_Weight_Loss,Service_X_Ray from preferences_services"
+query_cust_pref_service += " where customer_id = (select max(customer_id) from preferences_services)"
 cursor_cust_pref_service = conn.execute(query_cust_pref_service)
 
 prepareString = ""
@@ -31,105 +35,105 @@ cust_pref_dict = { 'service_allergy': 0,'service_abortion': 0,'Service_Acupunctu
 # Pending : Check if you want to compare with NULL or Zero in the if condition
 # start from 1 because 0th column is customer id 
 for row in cursor_cust_pref_service:
-	if row[1]: 
+	if row[0]: 
 		prepareString += "service_allergy > 0 " 
-		cust_pref_dict['service_allergy'] = row[1]
+		cust_pref_dict['service_allergy'] = row[0]
+
+	if row[1]:
+		prepareString += "OR service_abortion > 0 "
+		cust_pref_dict['service_abortion'] = row[1]
 
 	if row[2]:
-		prepareString += "OR service_abortion > 0 "
-		cust_pref_dict['service_abortion'] = row[2]
+		prepareString += "OR Service_Acupuncture > 0 "
+		cust_pref_dict['Service_Acupuncture'] = row[2]
 
 	if row[3]:
-		prepareString += "OR Service_Acupuncture > 0 "
-		cust_pref_dict['Service_Acupuncture'] = row[3]
+		prepareString += "OR Service_BabyCare > 0 "
+		cust_pref_dict['Service_BabyCare'] = row[3]
 
 	if row[4]:
-		prepareString += "OR Service_BabyCare > 0 "
-		cust_pref_dict['Service_BabyCare'] = row[4]
+		prepareString += "OR Service_Cancer > 0 "
+		cust_pref_dict['Service_Cancer'] = row[4]
 
 	if row[5]:
-		prepareString += "OR Service_Cancer > 0 "
-		cust_pref_dict['Service_Cancer'] = row[5]
+		prepareString += "OR Service_Cardiac > 0 "
+		cust_pref_dict['Service_Cardiac'] = row[5]
 
 	if row[6]:
-		prepareString += "OR Service_Cardiac > 0 "
-		cust_pref_dict['Service_Cardiac'] = row[6]
+		prepareString += "OR Service_Chiropractic_Care > 0 "
+		cust_pref_dict['Service_Chiropractic_Care'] = row[6]
 
 	if row[7]:
-		prepareString += "OR Service_Chiropractic_Care > 0 "
-		cust_pref_dict['Service_Chiropractic_Care'] = row[7]
+		prepareString += "OR Service_Cosmetic_Surgery > 0 "
+		cust_pref_dict['Service_Cosmetic_Surgery'] = row[7]
 
 	if row[8]:
-		prepareString += "OR Service_Cosmetic_Surgery > 0 "
-		cust_pref_dict['Service_Cosmetic_Surgery'] = row[8]
+		prepareString += "OR Service_Dental > 0 "
+		cust_pref_dict['Service_Dental'] = row[8]
 
 	if row[9]:
-		prepareString += "OR Service_Dental > 0 "
-		cust_pref_dict['Service_Dental'] = row[9]
+		prepareString += "OR Service_Diabetes > 0 "
+		cust_pref_dict['Service_Diabetes'] = row[9]
 
 	if row[10]:
-		prepareString += "OR Service_Diabetes > 0 "
-		cust_pref_dict['Service_Diabetes'] = row[10]
+		prepareString += "OR Service_EyeCare > 0 "
+		cust_pref_dict['Service_EyeCare'] = row[10]
 
 	if row[11]:
-		prepareString += "OR Service_EyeCare > 0 "
-		cust_pref_dict['Service_EyeCare'] = row[11]
+		prepareString += "OR Service_Habilitation > 0 "
+		cust_pref_dict['Service_Habilitation'] = row[11]
 
 	if row[12]:
-		prepareString += "OR Service_Habilitation > 0 "
-		cust_pref_dict['Service_Habilitation'] = row[12]
+		prepareString += "OR Service_Immunization > 0 "
+		cust_pref_dict['Service_Immunization'] = row[12]
 
 	if row[13]:
-		prepareString += "OR Service_Immunization > 0 "
-		cust_pref_dict['Service_Immunization'] = row[13]
+		prepareString += "OR Service_Infertility > 0 "
+		cust_pref_dict['Service_Infertility'] = row[13]
 
 	if row[14]:
-		prepareString += "OR Service_Infertility > 0 "
-		cust_pref_dict['Service_Infertility'] = row[14]
+		prepareString += "OR Service_Mammogram > 0 "
+		cust_pref_dict['Service_Mammogram'] = row[14]
 
 	if row[15]:
-		prepareString += "OR Service_Mammogram > 0 "
-		cust_pref_dict['Service_Mammogram'] = row[15]
+		prepareString += "OR Service_MentalHealth > 0 "
+		cust_pref_dict['Service_MentalHealth'] = row[15]
 
 	if row[16]:
-		prepareString += "OR Service_MentalHealth > 0 "
-		cust_pref_dict['Service_MentalHealth'] = row[16]
+		prepareString += "OR Service_Nursing > 0 "
+		cust_pref_dict['Service_Nursing'] = row[16]
 
 	if row[17]:
-		prepareString += "OR Service_Nursing > 0 "
-		cust_pref_dict['Service_Nursing'] = row[17]
+		prepareString += "OR Service_PostNatal > 0 "
+		cust_pref_dict['Service_PostNatal'] = row[17]
 
 	if row[18]:
-		prepareString += "OR Service_PostNatal > 0 "
-		cust_pref_dict['Service_PostNatal'] = row[18]
+		prepareString += "OR Service_PreNatal > 0 "
+		cust_pref_dict['Service_PreNatal'] = row[18]
 
 	if row[19]:
-		prepareString += "OR Service_PreNatal > 0 "
-		cust_pref_dict['Service_PreNatal'] = row[19]
-
-	if row[20]:
 		prepareString += "OR Service_Referral > 0 "
-		cust_pref_dict['Service_Referral'] = row[20]
+		cust_pref_dict['Service_Referral'] = row[19]
 	
-	if row[21]:
+	if row[20]:
 		prepareString += "OR Service_Rehabilitation > 0 "
-		cust_pref_dict['Service_Rehabilitation'] = row[21]
+		cust_pref_dict['Service_Rehabilitation'] = row[20]
+
+	if row[21]:
+		prepareString += "OR Service_Surgery > 0 "
+		cust_pref_dict['Service_Surgery'] = row[21]
 
 	if row[22]:
-		prepareString += "OR Service_Surgery > 0 "
-		cust_pref_dict['Service_Surgery'] = row[22]
+		prepareString += "OR Service_Urgent_Care > 0 "
+		cust_pref_dict['Service_Urgent_Care'] = row[22]
 
 	if row[23]:
-		prepareString += "OR Service_Urgent_Care > 0 "
-		cust_pref_dict['Service_Urgent_Care'] = row[23]
+		prepareString += "OR Service_Weight_Loss > 0 "
+		cust_pref_dict['Service_Weight_Loss'] = row[23]
 
 	if row[24]:
-		prepareString += "OR Service_Weight_Loss > 0 "
-		cust_pref_dict['Service_Weight_Loss'] = row[24]
-
-	if row[25]:
 		prepareString += "OR Service_X_Ray > 0 "
-		cust_pref_dict['Service_X_Ray'] = row[25]
+		cust_pref_dict['Service_X_Ray'] = row[24]
 
 
 prepareString = "(" + prepareString + ")"
@@ -138,7 +142,7 @@ prepareString = "(" + prepareString + ")"
 #  Get number_of_children, age, married status
 
 query_personal = "SELECT customer_id, age, married, number_of_children from personal_details"
-query_personal += " WHERE customer_id = (SELECT max(customer_id) from personal_details"
+query_personal += " WHERE customer_id = (SELECT max(customer_id) from personal_details)"
 cursor_personal = conn.execute(query_personal)
 
 # Expecting one record only
