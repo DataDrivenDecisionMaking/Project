@@ -500,13 +500,23 @@ query_weight_table_max = "SELECT max(v_premium), max(v_deductible) from weight_t
 cursor_weight_table_max = conn.execute(query_weight_table_max)
 
 for row in cursor_weight_table_max:
-	max_premium = row[0]
-	max_deductible = row[1]
+    print "row[0]="+row[0]
 
-# Normalize premium and deductible in weight table
+for row in cursor_weight_table_max:
+	max_premium = row[0][1:]
+	max_deductible = row[1][1:]
+
+print "max_premium:"+max_premium
+print "max_deductible:"+max_deductible
+
+max_premium=max_premium.replace(',','')
+max_deductible=max_deductible.replace(',','')
+
+
 query_weight_table_normalize = "UPDATE weight_table set v_premium = v_premium/"+max_premium
 query_weight_table_normalize += ", v_deductible = v_deductible/"+max_deductible+" where v_customer_id = "+cust_id
 
+print query_weight_table_normalize
 cursor_update_normalize = conn.cursor()
 cursor_update_normalize.execute(query_weight_table_normalize)
 conn.commit()
