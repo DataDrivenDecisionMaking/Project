@@ -15,8 +15,8 @@ for row in cursor_cust_pref_cost:
 	v_pref_premium_weight = row[0]
 	v_pref_deductible_weight = row[1]
 
-query_cust_pref_service = "select * from preference_services"
-query_cust_pref_service = query_cust_pref_service  + "where customer_id = (select max(customer_id) from preference_services)"
+query_cust_pref_service = "select * from preferences_services"
+query_cust_pref_service = query_cust_pref_service  + "where customer_id = (select max(customer_id) from preferences_services)"
 cursor_cust_pref_service = conn.execute(query_cust_pref_service)
 
 prepareString = ""
