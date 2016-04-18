@@ -152,6 +152,12 @@ for row in cursor_personal:
 	cust_marriage_status = row[2]
 	cust_num_of_children = row[3]
 
+#To be populated / fetched from frontend
+
+v_state_code='IN'
+v_county_name='Scott'
+
+
  # Main query
 query = "select pd.age, pd.married, pd.number_of_children,"
 query = query + "hd.plan_id, hd.plan_marketing_name, hd.CHILD_ONLY_OFFERING, hd.ADULT_DENTAL, "
@@ -162,33 +168,26 @@ query = query + "hd.PREM_COUPLE_30, hd.PREM_COUPLE_40, hd.PREM_COUPLE_50, hd.PRE
 query = query + "hd.COUPLE1_CHILD_AGE_21, hd.COUPLE1_CHILD_AGE_30, hd.COUPLE1_CHILD_AGE_40, "
 query = query + "hd.COUPLE1_CHILD_AGE_50, hd.COUPLE2_CHILDREN_AGE_21, hd.COUPLE2_CHILDREN_AGE_30, "
 query = query + "hd.COUPLE2_CHILDREN_AGE_40, hd.COUPLE2_CHILDREN_AGE_50, hd.COUPLE3_OR_MORE_CHILDREN_AGE_21, "
-
-
 query = query + "hd.COUPLE3_OR_MORE_CHILDREN_AGE_30, hd.COUPLE3_OR_MORE_CHILDREN_AGE_40, "
 query = query + "hd.COUPLE3_OR_MORE_CHILDREN_AGE_50, hd.IND1_CHILD_AGE_21, hd.IND1_CHILD_AGE_30,"
 query = query + "hd.IND1_CHILD_AGE_40, hd.IND1_CHILD_AGE_50, hd.IND2_CHILD_AGE_21, hd.IND2_CHILD_AGE_30, "
 query = query + "hd.IND2_CHILD_AGE_40, hd.IND2_CHILD_AGE_50, hd.IND3_OR_MORE_CHILDREN_AGE_21, "
 query = query + "hd.IND3_OR_MORE_CHILDREN_AGE_30, hd.IND3_OR_MORE_CHILDREN_AGE_40, "
 query = query + "hd.IND3_OR_MORE_CHILDREN_AGE_50, hd.MED_DED_IND_STD, hd.MED_DED_FAM_STD,"
-
-
 query = query + "hps.Service_Allergy, hps.Service_Abortion, hps.Service_Acupuncture, hps.Service_BabyCare, "
 query = query + "hps.Service_Cancer, hps.Service_Cardiac, hps.Service_Chiropractic_Care, hps.Service_Cosmetic_Surgery ,"
 query = query + "hps.Service_Dental , hps.Service_Diabetes, hps.Service_EyeCare, hps.Service_Habilitation, hps.Service_Immunization,"
 query = query + "hps.Service_Infertility, hps.Service_Mammogram, hps.Service_MentalHealth, hps.Service_Nursing,"
 query = query + "hps.Service_PostNatal, hps.Service_PreNatal, hps.Service_Referral, hps.Service_Rehabilitation , hps.Service_Surgery, "
 query = query + "hps.Service_Urgent_Care , hps.Service_Weight_Loss, hps.Service_X_Ray"
-
-
-query = query + "from hidata_new hd, personal_details pd, health_plan_services hps"
-query = query + "where hd.state_code = pd.state_code"
-query = query + "and hd.county_name = pd.county_name"
-query = query + "and hd.plan_marketing_name = hps.planName"
-# query = query + "and (hps.service_allergy = 1 OR hps.service_abortion = 1 OR ...) // generated dynamically"
+query = query + " from hidata_new hd, personal_details pd, health_plan_services hps"
+query = query + " where hd.state_code = pd.state_code"
+query = query + " and hd.county_name = pd.county_name"
+query = query + " and hd.plan_marketing_name = hps.planName and "
 query = query + prepareString
-query = query + "and pd.state_code = v_state_code  //coming from frontend"
-query = query + "and pd.county_name = v_county_name  // coming from frontend"
-query = query + "and pd.customer_id =  ( select max(customer_id) from personal_details );"
+query = query + " and pd.state_code = '"+v_state_code+"'"
+query = query + " and pd.county_name = '"+v_county_name+"'"
+query = query + " and pd.customer_id =  ( select max(customer_id) from personal_details )"
 
 cursor_main = conn.execute(query)
 
