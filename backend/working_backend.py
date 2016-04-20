@@ -1,6 +1,12 @@
+
+# coding: utf-8
+
+# In[32]:
+
 import sqlite3
 
-conn = sqlite3.connect('/Users/manishsingh/SEM4/downloads/sqlite-autoconf-3120100/team1DB.db')
+# conn = sqlite3.connect('/Users/manishsingh/SEM4/downloads/sqlite-autoconf-3120100/team1DB.db')
+conn = sqlite3.connect('/Users/manishsingh/SEM4/downloads/sqlite-autoconf-3120100/testDB.db')
 cursor_insert = conn.cursor()
 
 print conn
@@ -142,7 +148,7 @@ prepareString = "(" + prepareString + ")"
 
 #  Get number_of_children, age, married status
 
-query_personal = "SELECT customer_id, age, married, number_of_children from personal_details"
+query_personal = "SELECT customer_id, age, married, number_of_children, state_code,county_name from personal_details"
 query_personal += " WHERE customer_id = (SELECT max(customer_id) from personal_details)"
 cursor_personal = conn.execute(query_personal)
 
@@ -152,11 +158,14 @@ for row in cursor_personal:
 	cust_age = row[1]
 	cust_marriage_status = row[2]
 	cust_num_of_children = row[3]
+	v_state_code = row[4]
+	v_county_name = row[5]
 
-#To be populated / fetched from frontend
-
-v_state_code='IN'
-v_county_name='Scott'
+print "cust_age:="+str(cust_age)
+print "cust_marriage_status:="+cust_marriage_status
+print "cust_num_of_children:="+str(cust_num_of_children)
+print "v_state_code:="+str(v_state_code)
+print "v_county_name:="+str(v_county_name)
 
 
  # Main query
@@ -190,6 +199,7 @@ query = query + " and pd.state_code = '"+v_state_code+"'"
 query = query + " and pd.county_name = '"+v_county_name+"'"
 query = query + " and pd.customer_id =  ( select max(customer_id) from personal_details )"
 
+print query
 cursor_main = conn.execute(query)
 
 
@@ -242,32 +252,34 @@ for row in cursor_main:
 	v_IND3_OR_MORE_CHILDREN_AGE_50 = row[43]
 	v_MED_DED_IND_STD = row[44]
 	v_MED_DED_FAM_STD = row[45]
-	v_Service_Allergy=float(row[46])*0.02
-	v_Service_Abortion=float(row[47])*0.02
-	v_Service_Acupuncture=float(row[48])*0.02
-	v_Service_BabyCare=float(row[49])*0.02
-	v_Service_Cancer=float(row[50])*0.02
-	v_Service_Cardiac=float(row[51])*0.02
-	v_Service_Chiropractic_Care=float(row[52])*0.02
-	v_Service_Cosmetic_Surgery=float(row[53])*0.02
-	v_Service_Dental=float(row[54])*0.02
-	v_Service_Diabetes=float(row[55])*0.02
-	v_Service_EyeCare=float(row[56])*0.02
-	v_Service_Habilitation=float(row[57])*0.02
-	v_Service_Immunization=float(row[58])*0.02
-	v_Service_Infertility=float(row[59])*0.02
-	v_Service_Mammogram=float(row[60])*0.02
-	v_Service_MentalHealth=float(row[61])*0.02
-	v_Service_Nursing=float(row[62])*0.02
-	v_Service_PostNatal=float(row[63])*0.02
-	v_Service_PreNatal=float(row[64])*0.02
-	v_Service_Referral=float(row[65])*0.02
-	v_Service_Rehabilitation=float(row[66])*0.02
-	v_Service_Surgery=float(row[67])*0.02
-	v_Service_Urgent_Care=float(row[68])*0.02
-	v_Service_Weight_Loss=float(row[69])*0.02
-	v_Service_X_Ray=float(row[70])*0.02
-	
+	v_Service_Allergy=float(row[46])
+	v_Service_Abortion=float(row[47])
+	v_Service_Acupuncture=float(row[48])
+	v_Service_BabyCare=float(row[49])
+	v_Service_Cancer=float(row[50])
+	v_Service_Cardiac=float(row[51])
+	v_Service_Chiropractic_Care=float(row[52])
+	v_Service_Cosmetic_Surgery=float(row[53])
+	v_Service_Dental=float(row[54])
+	v_Service_Diabetes=float(row[55])
+	v_Service_EyeCare=float(row[56])
+	v_Service_Habilitation=float(row[57])
+	v_Service_Immunization=float(row[58])
+	v_Service_Infertility=float(row[59])
+	v_Service_Mammogram=float(row[60])
+	v_Service_MentalHealth=float(row[61])
+	v_Service_Nursing=float(row[62])
+	v_Service_PostNatal=float(row[63])
+	v_Service_PreNatal=float(row[64])
+	v_Service_Referral=float(row[65])
+	v_Service_Rehabilitation=float(row[66])
+	v_Service_Surgery=float(row[67])
+	v_Service_Urgent_Care=float(row[68])
+	v_Service_Weight_Loss=float(row[69])
+	v_Service_X_Ray=float(row[70])
+	print "v_PREM_ADULT_IND_AGE_21:="+v_PREM_ADULT_IND_AGE_21
+	v_total_services_covered = v_Service_Allergy + v_Service_Abortion+ v_Service_Acupuncture + v_Service_BabyCare + v_Service_Cancer + v_Service_Cardiac + v_Service_Chiropractic_Care+ v_Service_Cosmetic_Surgery + v_Service_Dental + v_Service_Diabetes + v_Service_EyeCare+ v_Service_Habilitation + v_Service_Immunization + v_Service_Infertility + v_Service_Mammogram + v_Service_MentalHealth + v_Service_Nursing + v_Service_PostNatal + v_Service_PreNatal + v_Service_Referral + v_Service_Rehabilitation + v_Service_Surgery +v_Service_Urgent_Care + v_Service_Weight_Loss + v_Service_X_Ray
+	v_total_services_covered *=0.02
 	if cust_pref_dict['service_allergy'] > 0 :
 		v_Service_Allergy *= float(cust_pref_dict['service_allergy']) 
 
@@ -344,16 +356,19 @@ for row in cursor_main:
 		v_Service_X_Ray *= float(cust_pref_dict['Service_X_Ray'])
 
 	v_service_sum_derived = v_Service_Allergy + v_Service_Abortion+ v_Service_Acupuncture + v_Service_BabyCare + v_Service_Cancer + v_Service_Cardiac + v_Service_Chiropractic_Care+ v_Service_Cosmetic_Surgery + v_Service_Dental + v_Service_Diabetes + v_Service_EyeCare+ v_Service_Habilitation + v_Service_Immunization + v_Service_Infertility + v_Service_Mammogram + v_Service_MentalHealth + v_Service_Nursing + v_Service_PostNatal + v_Service_PreNatal + v_Service_Referral + v_Service_Rehabilitation + v_Service_Surgery +v_Service_Urgent_Care + v_Service_Weight_Loss + v_Service_X_Ray
-	v_cust_premium = 0 
+	v_cust_premium = 0
+	v_service_sum_derived *=0.9
+	v_service_sum_derived +=v_total_services_covered
 
-	if cust_marriage_status == 'Y' or cust_num_of_children > 0 :
+	if cust_marriage_status == 'Y' or int(cust_num_of_children) > 0 :
 		v_cust_deductible = v_MED_DED_FAM_STD
 	else:
 		v_cust_deductible = v_MED_DED_IND_STD
         
-	if cust_marriage_status == 'N' and cust_num_of_children == 0 :
+	if cust_marriage_status == 'N' and int(cust_num_of_children) == 0 :
 		if cust_age <= 21 :
 			v_cust_premium = v_PREM_ADULT_IND_AGE_21
+			print "*^&*^*&^*&^*&^*^*^*^*^*&"
 
 		if cust_age > 21 and cust_age <= 27 :
 			v_cust_premium = v_PREM_ADULT_IND_AGE_27
@@ -370,7 +385,7 @@ for row in cursor_main:
 		if cust_age > 50 :
 			v_cust_premium = v_PREM_ADULT_IND_AGE_60
             
-	if cust_marriage_status == 'Y' and cust_num_of_children == 0 :
+	if cust_marriage_status == 'Y' and int(cust_num_of_children) == 0 :
 		if cust_age <= 21 :
 			v_cust_premium = v_PREM_COUPLE_21
 
@@ -386,7 +401,7 @@ for row in cursor_main:
 		if cust_age > 50 : 
 			v_cust_premium = v_PREM_COUPLE_60
             
-	if cust_marriage_status == 'Y' and cust_num_of_children == 1 :
+	if cust_marriage_status == 'Y' and int(cust_num_of_children) == 1 :
 		if cust_age <= 21 :
 			v_cust_premium = v_COUPLE1_CHILD_AGE_21
 
@@ -399,7 +414,7 @@ for row in cursor_main:
 		if cust_age > 40 :
 			v_cust_premium = v_COUPLE1_CHILD_AGE_50
             
-	if cust_marriage_status == 'Y' and cust_num_of_children == 2 :
+	if cust_marriage_status == 'Y' and int(cust_num_of_children) == 2 :
 		if cust_age <= 21 :
 			v_cust_premium = v_COUPLE2_CHILDREN_AGE_21
 
@@ -412,7 +427,7 @@ for row in cursor_main:
 		if cust_age > 40 :
 			v_cust_premium = v_COUPLE2_CHILDREN_AGE_50
             
-	if cust_marriage_status == 'Y' and cust_num_of_children >= 3 :
+	if cust_marriage_status == 'Y' and int(cust_num_of_children) >= 3 :
 		if cust_age <= 21 :
 			v_cust_premium = v_COUPLE3_OR_MORE_CHILDREN_AGE_21
 
@@ -425,7 +440,7 @@ for row in cursor_main:
 		if cust_age > 40 :
 			v_cust_premium = v_COUPLE3_OR_MORE_CHILDREN_AGE_50
             
-	if cust_marriage_status == 'N' and cust_num_of_children == 1 :
+	if cust_marriage_status == 'N' and int(cust_num_of_children) == 1 :
 		if cust_age <= 21 :
 			v_cust_premium = v_IND1_CHILD_AGE_21 
 
@@ -438,7 +453,7 @@ for row in cursor_main:
 		if cust_age > 40 :
 			v_cust_premium = v_IND1_CHILD_AGE_50
             
-	if cust_marriage_status == 'N' and cust_num_of_children == 2 :
+	if cust_marriage_status == 'N' and int(cust_num_of_children) == 2 :
 		if cust_age <= 21 :
 			v_cust_premium = v_IND2_CHILD_AGE_21 
 
@@ -451,7 +466,7 @@ for row in cursor_main:
 		if cust_age > 40 :
 			v_cust_premium = v_IND2_CHILD_AGE_50
             
-	if cust_marriage_status == 'N' and cust_num_of_children >= 3 :
+	if cust_marriage_status == 'N' and int(cust_num_of_children) >= 3 :
 		if cust_age <= 21 :
 			v_cust_premium = v_IND3_OR_MORE_CHILDREN_AGE_21 
 
@@ -463,6 +478,12 @@ for row in cursor_main:
 
 		if cust_age > 40 :
 			v_cust_premium = v_IND3_OR_MORE_CHILDREN_AGE_50
+	if v_cust_premium != None:
+		v_cust_premium=v_cust_premium[1:]
+		v_cust_premium=v_cust_premium.replace(',','')
+	if v_cust_deductible != None:
+		v_cust_deductible=v_cust_deductible[1:]
+		v_cust_deductible=v_cust_deductible.replace(',','')
 	insert_query = "INSERT INTO weight_table values("+cust_id+",'"+str(v_plan_id)+"','"+v_plan_marketing_name+"','"+str(v_cust_premium)
 	insert_query += "','"+ str(v_cust_deductible) + "',"+str(v_service_sum_derived)+",0,0)"
 	print insert_query
@@ -472,22 +493,38 @@ for row in cursor_main:
 query_weight_table_max = "SELECT max(v_premium), max(v_deductible) from weight_table"
 cursor_weight_table_max = conn.execute(query_weight_table_max)
 
-for row in cursor_weight_table_max:
-    print "row[0]="+row[0]
+# for row in cursor_weight_table_max:
+#     print "row[0]="+row[0]
+
+# max_premium='$0'
+# max_deductible='$0'
 
 for row in cursor_weight_table_max:
-	max_premium = row[0][1:]
-	max_deductible = row[1][1:]
+	max_premium = float(row[0])
+	max_deductible = float(row[1])
 
-print "max_premium:"+max_premium
-print "max_deductible:"+max_deductible
+if max_premium == None:
+    max_premium = 0.0
 
-max_premium=max_premium.replace(',','')
-max_deductible=max_deductible.replace(',','')
+if max_deductible == None:
+    max_deductible = 0.0
+
+print "---------------"
+print max_premium
+print max_deductible
+print "+++++++++++++++++"
+# max_premium = max_premium[1:]
+# max_deductible = max_deductible[1:]
+
+print "max_premium:"+str(max_premium)
+print "max_deductible:"+str(max_deductible)
+
+# max_premium=max_premium.replace(',','')
+# max_deductible=max_deductible.replace(',','')
 
 
-query_weight_table_normalize = "UPDATE weight_table set v_premium = v_premium/"+max_premium
-query_weight_table_normalize += ", v_deductible = v_deductible/"+max_deductible+" where v_customer_id = "+cust_id
+query_weight_table_normalize = "UPDATE weight_table set v_premium = v_premium/"+str(max_premium)
+query_weight_table_normalize += ", v_deductible = v_deductible/"+str(max_deductible)+" where v_customer_id = "+cust_id
 
 print query_weight_table_normalize
 cursor_update_normalize = conn.cursor()
@@ -513,3 +550,484 @@ conn.commit()
 print "Operation done successfully";
 
 conn.close()
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[38]:
+
+str(3.45)
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
+
+# In[ ]:
+
+
+
